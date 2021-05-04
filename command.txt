@@ -1,0 +1,1 @@
+Get-ADGroupMember "WGME-Users" | Get-ADUser -Properties SurName, GivenName, Department, Title, EmailAddress, telephoneNumber | Select-Object Surname, GivenName, Department, EmailAddress, telephoneNumber, Title | Export-Csv 'C:\adtest\wgme1.csv'
