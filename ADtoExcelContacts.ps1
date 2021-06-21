@@ -1,9 +1,11 @@
 # ENSURE YOU CHANGE DPATH TO THE SHEET DIRECTORY, OR USE "./" TO SEND TO CURRENT FOLDER
+# Need AD module for Powershell https://www.microsoft.com/en-us/download/details.aspx?id=45520
 # MUST HAVE THE IMPORT-EXCEL MODULE INSTALLED FOR POWERSHELL
 # https://github.com/dfinke/ImportExcel
+# Install-Module ImportExcel or download manually and copy to docs/powershell/mods
 # Documentation is similar to https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/export-csv?view=powershell-7 
 
-$dpath = "C:\Users\lpower\OneDrive - Sinclair Broadcast Group, Inc\!Profile\Documents\adtest"
+$dpath = "$PSScriptRoot"
 $tpath = "$dpath\Template_Station Extension_Email.xlsx"
 $props = @("SurName", "GivenName", "Department", "Title", "EmailAddress", "telephoneNumber")
 $adgroup = "WGME-Users"
@@ -41,6 +43,7 @@ $Sheet.Columns.Replace("WGME PROMOTION", "Promotion")
 $Sheet.Columns.Replace("WPFO PROMOTION", "Promotion")
 $Sheet.Columns.Replace("WPFO TRAFFIC", "Traffic")
 $Sheet.Columns.Replace("Anchor/Reporter I", "Anchor/Reporter")
+$Sheet.Columns.Replace("Anchor/ReporterI", "Anchor/Reporter")
 $Sheet.Columns.Replace("Anchor/Reporter II", "Anchor/Reporter")
 $Sheet.Columns.Replace("Assistant Chief Engineer II", "Assistant Chief Engineer")
 $Sheet.Columns.Replace("Assistant Director, News", "Assistant News Director")
@@ -60,6 +63,7 @@ $Sheet.Columns.Replace("Manager, Multimedia", "Multimedia Manager")
 $Sheet.Columns.Replace("Managing Editor I", "Managing Editor")
 $Sheet.Columns.Replace("Marketing Consultant Sales", "Marketing Consultant")
 $Sheet.Columns.Replace("Meteorologist I", "Meteorologist")
+$Sheet.Columns.Replace("MeteorologistI", "Meteorologist")
 $Sheet.Columns.Replace("Meteorologist II", "Meteorologist")
 $Sheet.Columns.Replace("Multimedia Journalist I", "Multimedia Journalist")
 $Sheet.Columns.Replace("News Anchor II", "News Anchor")
@@ -75,7 +79,44 @@ $Sheet.Columns.Replace("Technician I, Engineering", "Engineering Technician")
 $Sheet.Columns.Replace("Technician, Operations", "Operations Technician")
 $Sheet.Columns.Replace("Video Editor I", "Video Editor")
 $Sheet.Columns.Replace("VP, General Manager", "General Manager")
+$Sheet.Columns.Replace("Editor I, Promotion", "Promotion Editor")
 $PSheet.Cells.Item(19,6) = "Updated $UpDate"
+
+
+$used = $Sheet.usedRange 
+$lastCell = $used.SpecialCells(11) 
+$row = $lastCell.row
+for ($i = 1; $i -lt $row; $i++) {
+if ($Sheet.cells.Item($i,5).Value() -eq "jbrogers@sbgtv.com") {$Sheet.Cells.Item($i,2) = "Brad"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "anpoulin@sbgtv.com") {$Sheet.Cells.Item($i,2) = "Nick"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "jbowne@sbgtv.com") {$Sheet.Cells.Item($i,2) = "Jim"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "PYoung@sbgtv.com") {$Sheet.Cells.Item($i,2) = "Pam"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "bbarton@sbgtv.com") {$Sheet.Cells.Item($i,2) = "Bill"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "wagayer@sbgtv.com") {$Sheet.Cells.Item($i,2) = "Ritt"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "ksehobbs@sbgtv.com") {$Sheet.Cells.Item($i,2) = "KiKi"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "sacross@sbgtv.com") {$Sheet.Cells.Item($i,2) = "Gus"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "tlham@sbgtv.com") {$Sheet.Cells.Item($i,4) = "WPFO Station Manager"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "mmeyer@sbgtv.com") {$Sheet.Cells.Item($i,2) = "Mal"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "krasor@sbgtv.com") {$Sheet.Cells.Item($i,2) = "Kerry"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "jdchrisos@sbgtv.com") {$Sheet.Cells.Item($i,2) = "Jon"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "kdegroot@sbgtv.com") {$Sheet.Cells.Item($i,2) = "Kate"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "loconnor@sbgtv.com") {$Sheet.Cells.Item($i,2) = "Lexie"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "jpeterson@sbgtv.com") {$Sheet.Cells.Item($i,2) = "Jeff"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "loconnor@sbgtv.com") {$Sheet.Cells.Item($i,2) = "Lexie"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "rcsamowitz@sbgtv.com") {$Sheet.Cells.Item($i,2) = "Becky"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "loconnor@sbgtv.com") {$Sheet.Cells.Item($i,2) = "Lexie"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "ksampson@sbgtv.com") {$Sheet.Cells.Item($i,2) = "Katie"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "thomer@sbgtv.com") {$Sheet.Cells.Item($i,2) = "Ted"}
+elseif ($Sheet.cells.Item($i,5).Value() -eq "scbuccheri@sbgtv.com") {
+    $Sheet.Cells.Item($i,1) = ""
+    $Sheet.Cells.Item($i,2) = ""
+    $Sheet.Cells.Item($i,3) = ""
+    $Sheet.Cells.Item($i,4) = ""
+    $Sheet.Cells.Item($i,5) = ""
+    $Sheet.Cells.Item($i,6) = ""
+    }
+}
+
 [void]$Book.save()
 [void]$Book.close()
 [void]$ExShe.quit()
